@@ -1,7 +1,11 @@
 const Exercises = (props) => {
     return ( 
 
-        <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2]}</p>
+  <div>
+
+       {/* <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2]}</p> */}
+       <p>Number of exercises {props.parts[0].exercises+props.parts[1].exercises+props.parts[2].exercises }</p>
+  </div>
 
      );
 }
