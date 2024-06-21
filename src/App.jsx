@@ -1,15 +1,15 @@
 import Display from './Display'
 import { useState } from 'react'
 import Button from './Button'
-
+import StatisticLine from './StatisticLine'
 // a proper place to define a component
 const Statistics = (props) => {
 if(props.total!==0){
   return(
     <>
-     <div> good: {props.good}</div>
-     <div> neutral: {props.neutral}</div>
-     <div> bad:{props.bad}</div>
+      <StatisticLine text="good" value ={props.good} />
+      <StatisticLine text="neutral" value ={props.neutral} />
+      <StatisticLine text="bad" value ={props.bad} />
     </>
    )
 }else{
