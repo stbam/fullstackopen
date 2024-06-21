@@ -1,5 +1,4 @@
 const Display = (props) => {
-    console.log(props)
     return (
         
        <div>   
