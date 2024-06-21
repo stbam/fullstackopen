@@ -1,8 +1,21 @@
 import Display from './Display'
-
-
 import { useState } from 'react'
-  const App = () => {
+
+// a proper place to define a component
+const Statistics = (props) => {
+ 
+  return(
+   <>
+    <div> good: {props.good}</div>
+    <div> neutral: {props.neutral}</div>
+    <div> bad:{props.bad}</div>
+   </>
+  )
+  
+}
+
+
+const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -11,7 +24,6 @@ import { useState } from 'react'
 
   const handleGoodClick =()=>{
     setGood(good+1)
-    
   }
 const handleBadClick=()=>{
   setBad(bad+1);
@@ -29,9 +41,10 @@ const handleNeutralClick=()=>{
 
       <div>
         <h1>Statistics</h1>
-      <p>Good  {good}</p>
+       <Statistics good={good} bad={bad} neutral={neutral}></Statistics>
+    {/*  <p>Good  {good}</p>
       <p>Neutral {neutral}</p>
-      <p>Bad  {bad} </p>
+  <p>Bad  {bad} </p> */}
       </div>
     
     <div>
