@@ -7,6 +7,7 @@ import { useState } from 'react'
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const total = bad+ good  + neutral;
 
   const handleGoodClick =()=>{
     setGood(good+1)
@@ -34,7 +35,8 @@ const handleNeutralClick=()=>{
       </div>
     
     <div>
-      <Display value={good+bad+neutral}></Display>
+      {/* <Display value={good+bad+neutral}></Display>*/}
+      <Display good={good} neutral={neutral} bad={bad} total={total} ></Display>
     </div>
     </div>
   )

@@ -1,8 +1,15 @@
 const Display = (props) => {
+    console.log(props)
     return (
         
-       <div>   {props.value}   </div> 
-        
+       <div>   
+        <div>all {props.good+props.bad+props.neutral} </div>
+
+        <div> average {( props.good - props.bad)/props.total}% </div>
+        <div>positive {props.good/props.total}% </div>
+       
+        </div> 
+     
         );
 }
  
