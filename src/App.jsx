@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import personService from './services/person'
 const App = () => {
 
   const [notes, setNotes] = useState([])
@@ -13,50 +13,57 @@ const [newNumber,setNewNumber]=useState('')
 const [filter, setFilter]= useState('')
 
 useEffect(()=>{
-  axios.get('http://localhost:3002/persons')
-  .then(response=>{
-    console.log(response.data);
-    setPersons(response.data)
+  personService.getAll()
+.then(data=>{
+   // console.log(response.data);
+    setPersons(data)
   })
 },[])
-
-
 
 const handleFilterChange = (event) => {
   setFilter(event.target.value)
 }
-
 const personsToShow = filter === ''
   ? persons
   : persons.filter(person =>
       person.name.toLowerCase().includes(filter.toLowerCase())
     )
-    
-
   const handleSubmit = (event)=>{
     event.preventDefault();
     if (persons.some(person=>person.name===newName)){
       alert(`${newName} is already there`)
       return
     }
-
-
     const newPerson = { name: newName, number:newNumber }
-    setPersons(persons.concat(newPerson))
+    personService.create(newPerson)
+    .then(addedPerson => {
+      setPersons(persons.concat(addedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
     setNewName('')
-    
   }
 const handleInputChange =(event)=>{
   setNewName(event.target.value)
-  console.log(newName)
+  //console.log(newName)
 }
 const handleInputNumberChange=(event)=>{
   setNewNumber(event.target.value)
   console.log(newNumber)
 }
-
-
-
+const handleDelete = (name,id)=>{
+  console.log(id)
+  if (window.confirm(`Delete ${name}?`)) {
+    personService.deleteObj(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .catch(error => {
+        alert(`Failed to delete ${name}`)
+        console.error(error)
+      })
+  }
+}
   return (
     <div>
       <h2>Phonebook</h2>
@@ -85,8 +92,8 @@ const handleInputNumberChange=(event)=>{
 
       <ul>
         {personsToShow.map((person, index) => (
-          <li key={index}>
-            {person.name} {person.number}
+          <li key={person.id}>
+            {person.name} {person.number} <button onClick={()=>handleDelete(person.name,person.id)}>delete</button>
           </li>
         ))}
       </ul>
