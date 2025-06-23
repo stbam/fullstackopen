@@ -11,9 +11,14 @@ const create=(newObject)=>{
     const request = axios.post(baseUrl,newObject)
     return request.then(response=>response.data)
 }
-const update=()=>{
+const update = (id, updatedObject) => {
+    
+    console.log(id +' id')
+    console.log(updatedObject +' Object')
+    const request = axios.put(`${baseUrl}/${id}`, updatedObject)
+    return request.then(response => response.data)
+  }
 
-}
 const deleteObj=(id)=>{
   //  console.log(newObject)
   //  const request = axios.delete(baseUrl+`${id}`)

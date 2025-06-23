@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import personService from './services/person'
+import person from './services/person'
 const App = () => {
 
   const [notes, setNotes] = useState([])
@@ -31,7 +32,20 @@ const personsToShow = filter === ''
   const handleSubmit = (event)=>{
     event.preventDefault();
     if (persons.some(person=>person.name===newName)){
-      alert(`${newName} is already there`)
+      window.confirm( `${newName} is already added to the phonebook, replace the old number with a new one?`)
+    const existingPerson = persons.find(person => person.name === newName)
+
+    const updatedPerson = { ...existingPerson, number: newNumber } /*This creates a new object based on existingPerson (which is an object from your persons state).
+                                                                     The spread operator ...existingPerson copies all properties from the existing person (like id, name, number).
+                                                                     Then, you're overwriting the number property with newNumber. */
+    personService.update(existingPerson.id, updatedPerson)//chat gpt implemetation
+      
+      console.log(updatedPerson.name)
+      console.log(updatedPerson.number)
+      
+      personService.update(updatedPerson.id,updatedPerson)
+
+
       return
     }
     const newPerson = { name: newName, number:newNumber }
@@ -64,6 +78,12 @@ const handleDelete = (name,id)=>{
       })
   }
 }
+const handleUpdate=(id)=>{
+  console.log(id);
+
+
+
+}
   return (
     <div>
       <h2>Phonebook</h2>
@@ -93,7 +113,7 @@ const handleDelete = (name,id)=>{
       <ul>
         {personsToShow.map((person, index) => (
           <li key={person.id}>
-            {person.name} {person.number} <button onClick={()=>handleDelete(person.name,person.id)}>delete</button>
+            {person.name}   {person.number} <button onClick={()=>handleDelete(person.name,person.id)}>delete</button>
           </li>
         ))}
       </ul>
